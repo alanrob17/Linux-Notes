@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Linux Notes</title>
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/starter-template.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
+<style type="text/css">
+html {
+	font-size: 90.0%;
+}
+
+h2 {
+	margin-top: 60px;
+}
+
+h4, h3 {
+	padding-top: 40px!;		
+}
+
+p {
+	font-size: 1.2em;
+}
+h4 {
+	font-size: 1.4em;
+}
+
+img, pre.prettyprint {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+    color:#007bff;
+
+}
+blockquote {
+    border-left: 4px solid #999;
+    padding-left: 1rem;
+    page-break-inside: avoid;
+}
+:target:before {
+  content: "";
+  display: block;
+  height: 80px; /* adjust this value to your needs */
+  margin: -80px 0 0; /* this should be a negative value of the height above */
+}
+</style>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Linux notes</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Linux notes <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="starter-template">
+
+
+<h1 id="linux-notes">Linux Notes</h1>
+<p>These are note on tasks that I have learnt using Linux.</p>
+<h2 id="disc-usage">Disc usage</h2>
+<h3 id="report-filesystem-space-usage-df">Report filesystem space usage: df</h3>
+<p>To see the current disc where your home directory exists. This command shows information about the space used and available on your filesystem.</p>
+<p><code>-h</code> prints human readable results.</p>
+<pre class="prettyprint"><code><div>    df -h /home
+</div></code></pre>
+<p>Returns.</p>
+<blockquote>
+<p>/dev/nvme0n1p2  228G   24G  194G  11% /</p>
+</blockquote>
+<h3 id="estimate-file-space-usage-du">Estimate file space usage: du</h3>
+<p>Now that you know how much space is being used, you might want to figure out where that space is being used. This is where the <code>du</code> command comes in.</p>
+<pre class="prettyprint"><code><div>    du -hs ~
+</div></code></pre>
+<p>Returns.</p>
+<blockquote>
+<p>12G     /home/alanr</p>
+</blockquote>
+<h2 id="renaming-hard-disks">Renaming hard disks</h2>
+<p>Open the <strong>Disks</strong> application.</p>
+<p>Select the drive partition that you want to change.</p>
+<p>On the right-hand side you see the Volume and underneath that you see a black square icon. Click this to unmount the drive.</p>
+<p>Click the next icon (additional partition items)and select <code>Edit filesystem...</code>. Now add a name for the partition.</p>
+<p><a href="/assets/images/disks.png" title="Disks application">Disks application</a></p>
+<p>In this case I have renamed the partition, <strong>D</strong>.</p>
+<h2 id="shred">Shred</h2>
+<p>This is the command I use to remove sensitive files.</p>
+<pre class="prettyprint"><code><div>    shred -zfu -n 1 file.txt
+</div></code></pre>
+<p><strong>Note:</strong></p>
+<blockquote>
+<p>-z overwrites all bytes with a 0.<br>
+-f change permissions to allow writing if necessary.<br>
+-u add a final overwrite with zeros to hide shredding.<br>
+-n 1 overwrite the file 1 time.</p>
+</blockquote>
+<p>I have created a Bash alias for this command.</p>
+<p>Examples.</p>
+<pre class="prettyprint"><code><div>    wipe file.txt
+    wipe *.txt
+</div></code></pre>
+<h2 id="clearing-the-history">Clearing the history</h2>
+<p>Clear a particular entry.</p>
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">history</span> -d &lt;Line number&gt;
+</div></code></pre>
+<p>Clear current session history.</p>
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">history</span> -c
+</div></code></pre>
+<p>Now close the current terminal and reopen a terminal and you will see your previous history.</p>
+<p><strong>Permanently</strong> clear the history.</p>
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">history</span> -c &amp;&amp; <span class="hljs-built_in">history</span> -w
+</div></code></pre>
+<p>An easier way is to delete <code>~/.bash_history</code>.</p>
+<h2 id="ubuntu-app-installation-location">Ubuntu App Installation Location</h2>
+<p>To access your applications from anywhere on Ubuntu, you should place them in specific directories depending on your needs.</p>
+<h3 id="for-all-users-on-the-system">For all users on the system</h3>
+<p>Install the application in the <code>/opt</code> directory, which is a standard location for third-party software not managed by the package manager.</p>
+<p>If the application is a compiled program, you can create a wrapper script in <code>/usr/local/bin</code> that runs the executable. This script should be made executable with chmod +x.</p>
+<p>The <code>/usr/local/bin</code> directory is included in the system's default <strong>PATH</strong>, allowing you to run the application by typing its name from any terminal location.</p>
+<h3 id="for-only-your-user">For only your user</h3>
+<p>You can place the application files in a folder under your home directory, such as <code>~/Applications</code> or a hidden folder like <code>~/.apps</code>.</p>
+<p>To access it from the terminal, create a wrapper script in <code>~/.local/bin</code> (which is also in your PATH) or create an alias in your <code>~/.bashrc</code> file.</p>
+<p>This approach <strong>does not</strong> require administrative privileges.</p>
+<h3 id="for-desktop-integration-menu-entries">For desktop integration (menu entries)</h3>
+<p>To add a menu entry for the application, place a <code>.desktop</code> file in <code>~/.local/share/applications</code> for a single user or in <code>/usr/local/share/applications</code> for all users.</p>
+<p>This allows the application to appear in the graphical application menu.</p>
+<h3 id="for-applications-installed-via-source-code">For applications installed via source code</h3>
+<p>If you compile an application from source, the standard installation prefix is often <code>/usr/local</code>, which places the executable in <code>/usr/local/bin</code>.</p>
+<p>This directory is part of the default <strong>PATH</strong>, enabling easy terminal access.</p>
+
+
+
+</div><!-- starter-template -->
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"/>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+</body>
+</html>
