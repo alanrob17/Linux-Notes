@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Linux Notes</title>
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/starter-template.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
+<style type="text/css">
+html {
+	font-size: 90.0%;
+}
+
+h2 {
+	margin-top: 60px;
+}
+
+h4, h3 {
+	padding-top: 40px!;		
+}
+
+p {
+	font-size: 1.2em;
+}
+h4 {
+	font-size: 1.4em;
+}
+
+img, pre.prettyprint {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+h1, h2, h3, h4, h5, h6 {
+    color:#007bff;
+
+}
+blockquote {
+    border-left: 4px solid #999;
+    padding-left: 1rem;
+    page-break-inside: avoid;
+}
+:target:before {
+  content: "";
+  display: block;
+  height: 80px; /* adjust this value to your needs */
+  margin: -80px 0 0; /* this should be a negative value of the height above */
+}
+</style>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Linux notes</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">APT package manager <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="starter-template">
+
+
+<h1 id="install-and-update-software-with-a-package-manager">Install and update software with APT package manager</h1>
+<p>We use a package manager to install and update software tools on our system. Ubuntu use the <code>APT</code> (Advanced Package Tool) package manager.</p>
+<p>Your Linux system has an index of packages you can install.</p>
+<p>To see the list of packages available.</p>
+<pre class="prettyprint"><code><div>    sudo apt list
+</div></code></pre>
+<p>To see a list of installed packages.</p>
+<pre class="prettyprint"><code><div>    sudo apt list --installed
+</div></code></pre>
+<p>To view package details.</p>
+<pre class="prettyprint"><code><div>    sudo apt policy nano
+</div></code></pre>
+<p>Returns.</p>
+<pre class="prettyprint"><code><div>nano:
+  Installed: 7.2-2ubuntu0.1
+  Candidate: 7.2-2ubuntu0.1
+  Version table:
+ *** 7.2-2ubuntu0.1 500
+        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages
+        500 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages
+        100 /var/lib/dpkg/status
+     7.2-2build1 500
+        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages
+</div></code></pre>
+<p>To search for a software package.</p>
+<pre class="prettyprint"><code><div>    apt search tree |less
+</div></code></pre>
+<p>This brings back way too much information so we pipe it into <code>less</code>.</p>
+<p>Returns.</p>
+<pre class="prettyprint"><code><div>...
+tre-command/noble 0.4.0-5 amd64
+  Tree <span class="hljs-built_in">command</span>, improved
+
+tree/noble 2.1.1-2ubuntu3 amd64
+  displays an indented directory tree, <span class="hljs-keyword">in</span> color
+
+tree-ppuzzle/noble 5.3~rc16+dfsg-9build2 amd64
+  Parallelized reconstruction of phylogenetic trees by maximum likelihood
+...
+</div></code></pre>
+<p>You can find more information with.</p>
+<pre class="prettyprint"><code><div>    apt show tree
+</div></code></pre>
+<p>Returns.</p>
+<pre class="prettyprint"><code><div>Package: tree
+Version: 2.1.1-2ubuntu3
+Priority: optional
+Section: universe/utils
+Origin: Ubuntu
+Maintainer: Ubuntu Developers &lt;ubuntu-devel-discuss@lists.ubuntu.com&gt;
+Original-Maintainer: Florian Ernst &lt;florian@debian.org&gt;
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 111 kB
+Depends: libc6 (&gt;= 2.38)
+Homepage: http://oldmanprogrammer.net/source.php?dir=projects/tree
+Task: xubuntu-desktop, lubuntu-desktop, ubuntu-mate-core, ubuntu-mate-desktop, ubuntu-budgie-desktop-minimal, ubuntu-budgie-desktop, ubuntu-budgie-desktop-raspi, ubuntu-unity-desktop, ubuntucinnamon-desktop-minimal, ubuntucinnamon-desktop-raspi
+Download-Size: 47.1 kB
+APT-Sources: http://archive.ubuntu.com/ubuntu noble/universe amd64 Packages
+Description: displays an indented directory tree, <span class="hljs-keyword">in</span> color
+ Tree is a recursive directory listing <span class="hljs-built_in">command</span> that produces a depth indented
+ listing of files, <span class="hljs-built_in">which</span> is colorized ala dircolors <span class="hljs-keyword">if</span> the LS_COLORS environment
+ variable is <span class="hljs-built_in">set</span> and output is to tty.
+</div></code></pre>
+<p>To install the package.</p>
+<pre class="prettyprint"><code><div>    sudo apt install tree
+</div></code></pre>
+<p>To run <code>tree</code>.</p>
+<pre class="prettyprint"><code><div>    tree ~/
+</div></code></pre>
+<p>To set a depth level.</p>
+<pre class="prettyprint"><code><div>    tree -L 2 /etc
+</div></code></pre>
+<h2 id="to-upgrade-your-current-packages">To upgrade your current packages</h2>
+<p>Is a two step process.</p>
+<pre class="prettyprint"><code><div>    sudo apt update -y
+</div></code></pre>
+<p>And</p>
+<pre class="prettyprint"><code><div>    sudo apt upgrade -y
+</div></code></pre>
+<h2 id="remove-an-installed-package">Remove an installed package</h2>
+<pre class="prettyprint"><code><div>    sudo apt remove tree
+</div></code></pre>
+<p>This removes an installed package, but may leave configuration files behind. To Remove a package and its associated configuration files.</p>
+<pre class="prettyprint"><code><div>    sudo apt purge tree
+</div></code></pre>
+<p>Remove packages that were automatically installed to satisfy dependencies but are no longer needed.</p>
+<pre class="prettyprint"><code><div>    sudo apt autoremove
+</div></code></pre>
+<p>Reinstall a package if its installation is corrupted.</p>
+<pre class="prettyprint"><code><div>sudo apt reinstall tree
+</div></code></pre>
+<h2 id="add-a-package-repository-to-apt">Add a package repository to apt</h2>
+<p>In this example we will add the repository for Opera web browser.</p>
+<p>This is a two step process. First you have to add the GPG key to ensure authenticity of your packages.</p>
+<pre class="prettyprint"><code><div>curl -fsSL https://deb.opera.com/archive.key | gpg --dearmor | sudo tee /usr/share/keyrings/opera.gpg &gt; /dev/null
+</div></code></pre>
+<p>Finally, we’ll add the Opera Browser’s APT repository to our system:</p>
+<pre class="prettyprint"><code><div>sudo apt-add-repository <span class="hljs-string">'https://deb.opera.com/archive.key'</span>
+</div></code></pre>
+<p>Now, update your apt repository index to reflect the changes in the new repository. This is done with the following apt update command:</p>
+<pre class="prettyprint"><code><div>    sudo apt update
+</div></code></pre>
+<p>Now install the software with the following command:</p>
+<pre class="prettyprint"><code><div>    sudo apt install opera-stable
+</div></code></pre>
+<h2 id="list-all-dependencies-of-a-package">List all dependencies of a Package</h2>
+<p>Run this command.</p>
+<pre class="prettyprint"><code><div>    sudo apt depends tree
+</div></code></pre>
+<p>Returns.</p>
+<pre class="prettyprint"><code><div>    tree
+      Depends: libc6 (&gt;= 2.38)
+</div></code></pre>
+<h2 id="search-for-broken-dependencies-on-ubuntu">Search for Broken Dependencies on Ubuntu</h2>
+<p>If you want to see if you have broken dependencies run.</p>
+<pre class="prettyprint"><code><div>    sudo apt-get check nano
+</div></code></pre>
+<p>Returns in my case.</p>
+<blockquote>
+<p>Reading package lists... Done<br>
+Building dependency tree... Done<br>
+Reading state information... Done</p>
+</blockquote>
+<h2 id="search-for-location-of-packages">Search for location of packages</h2>
+<p>You can find the location of a particular package by using the <code>dpkg</code> tool which is the backend of the package manager.</p>
+<pre class="prettyprint"><code><div>    sudo dpkg -L nano
+</div></code></pre>
+<p>This returns a large amount of information including where the documentation and man pages are located.</p>
+<blockquote>
+<p>/.<br>
+/etc<br>
+/etc/nanorc<br>
+/usr<br>
+/usr/bin<br>
+/usr/bin/nano<br>
+...</p>
+</blockquote>
+<h2 id="clean-old-repository-lists-from-apt-package-manager">Clean old repository lists from APT Package Manager</h2>
+<p>You can remove old, unused repositories from Ubuntu with.</p>
+<pre class="prettyprint"><code><div>    sudo apt autoclean
+</div></code></pre>
+<p>Returns.</p>
+<blockquote>
+<p>Reading package lists... Done<br>
+Building dependency tree... Done<br>
+Reading state information... Done<br>
+Del landscape-client 24.02-0ubuntu5.3 [124 kB]<br>
+Del landscape-common 24.02-0ubuntu5.3 [93.0 kB]</p>
+</blockquote>
+<p>This was the result when I ran it.</p>
+
+
+
+</div><!-- starter-template -->
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"/>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+</body>
+</html>

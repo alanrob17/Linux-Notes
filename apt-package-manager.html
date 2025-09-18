@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>apt-package-manager.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="install-and-update-software-with-a-package-manager">Install and update software with APT package manager</h1>
+<p>We use a package manager to install and update software tools on our system. Ubuntu use the <code>APT</code> (Advanced Package Tool) package manager.</p>
+<p>Your Linux system has an index of packages you can install.</p>
+<p>To see the list of packages available.</p>
+<pre class="hljs"><code><div>    sudo apt list
+</div></code></pre>
+<p>To see a list of installed packages.</p>
+<pre class="hljs"><code><div>    sudo apt list --installed
+</div></code></pre>
+<p>To view package details.</p>
+<pre class="hljs"><code><div>    sudo apt policy nano
+</div></code></pre>
+<p>Returns.</p>
+<pre class="hljs"><code><div>nano:
+  Installed: 7.2-2ubuntu0.1
+  Candidate: 7.2-2ubuntu0.1
+  Version table:
+ *** 7.2-2ubuntu0.1 500
+        500 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages
+        500 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages
+        100 /var/lib/dpkg/status
+     7.2-2build1 500
+        500 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages
+</div></code></pre>
+<p>To search for a software package.</p>
+<pre class="hljs"><code><div>    apt search tree |less
+</div></code></pre>
+<p>This brings back way too much information so we pipe it into <code>less</code>.</p>
+<p>Returns.</p>
+<pre class="hljs"><code><div>...
+tre-command/noble 0.4.0-5 amd64
+  Tree <span class="hljs-built_in">command</span>, improved
+
+tree/noble 2.1.1-2ubuntu3 amd64
+  displays an indented directory tree, <span class="hljs-keyword">in</span> color
+
+tree-ppuzzle/noble 5.3~rc16+dfsg-9build2 amd64
+  Parallelized reconstruction of phylogenetic trees by maximum likelihood
+...
+</div></code></pre>
+<p>You can find more information with.</p>
+<pre class="hljs"><code><div>    apt show tree
+</div></code></pre>
+<p>Returns.</p>
+<pre class="hljs"><code><div>Package: tree
+Version: 2.1.1-2ubuntu3
+Priority: optional
+Section: universe/utils
+Origin: Ubuntu
+Maintainer: Ubuntu Developers &lt;ubuntu-devel-discuss@lists.ubuntu.com&gt;
+Original-Maintainer: Florian Ernst &lt;florian@debian.org&gt;
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 111 kB
+Depends: libc6 (&gt;= 2.38)
+Homepage: http://oldmanprogrammer.net/source.php?dir=projects/tree
+Task: xubuntu-desktop, lubuntu-desktop, ubuntu-mate-core, ubuntu-mate-desktop, ubuntu-budgie-desktop-minimal, ubuntu-budgie-desktop, ubuntu-budgie-desktop-raspi, ubuntu-unity-desktop, ubuntucinnamon-desktop-minimal, ubuntucinnamon-desktop-raspi
+Download-Size: 47.1 kB
+APT-Sources: http://archive.ubuntu.com/ubuntu noble/universe amd64 Packages
+Description: displays an indented directory tree, <span class="hljs-keyword">in</span> color
+ Tree is a recursive directory listing <span class="hljs-built_in">command</span> that produces a depth indented
+ listing of files, <span class="hljs-built_in">which</span> is colorized ala dircolors <span class="hljs-keyword">if</span> the LS_COLORS environment
+ variable is <span class="hljs-built_in">set</span> and output is to tty.
+</div></code></pre>
+<p>To install the package.</p>
+<pre class="hljs"><code><div>    sudo apt install tree
+</div></code></pre>
+<p>To run <code>tree</code>.</p>
+<pre class="hljs"><code><div>    tree ~/
+</div></code></pre>
+<p>To set a depth level.</p>
+<pre class="hljs"><code><div>    tree -L 2 /etc
+</div></code></pre>
+<h2 id="to-upgrade-your-current-packages">To upgrade your current packages</h2>
+<p>Is a two step process.</p>
+<pre class="hljs"><code><div>    sudo apt update -y
+</div></code></pre>
+<p>And</p>
+<pre class="hljs"><code><div>    sudo apt upgrade -y
+</div></code></pre>
+<h2 id="remove-an-installed-package">Remove an installed package</h2>
+<pre class="hljs"><code><div>    sudo apt remove tree
+</div></code></pre>
+<p>This removes an installed package, but may leave configuration files behind. To Remove a package and its associated configuration files.</p>
+<pre class="hljs"><code><div>    sudo apt purge tree
+</div></code></pre>
+<p>Remove packages that were automatically installed to satisfy dependencies but are no longer needed.</p>
+<pre class="hljs"><code><div>    sudo apt autoremove
+</div></code></pre>
+<p>Reinstall a package if its installation is corrupted.</p>
+<pre class="hljs"><code><div>sudo apt reinstall tree
+</div></code></pre>
+<h2 id="add-a-package-repository-to-apt">Add a package repository to apt</h2>
+<p>In this example we will add the repository for Opera web browser.</p>
+<p>This is a two step process. First you have to add the GPG key to ensure authenticity of your packages.</p>
+<pre class="hljs"><code><div>curl -fsSL https://deb.opera.com/archive.key | gpg --dearmor | sudo tee /usr/share/keyrings/opera.gpg &gt; /dev/null
+</div></code></pre>
+<p>Finally, we’ll add the Opera Browser’s APT repository to our system:</p>
+<pre class="hljs"><code><div>sudo apt-add-repository <span class="hljs-string">'https://deb.opera.com/archive.key'</span>
+</div></code></pre>
+<p>Now, update your apt repository index to reflect the changes in the new repository. This is done with the following apt update command:</p>
+<pre class="hljs"><code><div>    sudo apt update
+</div></code></pre>
+<p>Now install the software with the following command:</p>
+<pre class="hljs"><code><div>    sudo apt install opera-stable
+</div></code></pre>
+<h2 id="list-all-dependencies-of-a-package">List all dependencies of a Package</h2>
+<p>Run this command.</p>
+<pre class="hljs"><code><div>    sudo apt depends tree
+</div></code></pre>
+<p>Returns.</p>
+<pre class="hljs"><code><div>    tree
+      Depends: libc6 (&gt;= 2.38)
+</div></code></pre>
+<h2 id="search-for-broken-dependencies-on-ubuntu">Search for Broken Dependencies on Ubuntu</h2>
+<p>If you want to see if you have broken dependencies run.</p>
+<pre class="hljs"><code><div>    sudo apt-get check nano
+</div></code></pre>
+<p>Returns in my case.</p>
+<blockquote>
+<p>Reading package lists... Done<br>
+Building dependency tree... Done<br>
+Reading state information... Done</p>
+</blockquote>
+<h2 id="search-for-location-of-packages">Search for location of packages</h2>
+<p>You can find the location of a particular package by using the <code>dpkg</code> tool which is the backend of the package manager.</p>
+<pre class="hljs"><code><div>    sudo dpkg -L nano
+</div></code></pre>
+<p>This returns a large amount of information including where the documentation and man pages are located.</p>
+<blockquote>
+<p>/.<br>
+/etc<br>
+/etc/nanorc<br>
+/usr<br>
+/usr/bin<br>
+/usr/bin/nano<br>
+...</p>
+</blockquote>
+<h2 id="clean-old-repository-lists-from-apt-package-manager">Clean old repository lists from APT Package Manager</h2>
+<p>You can remove old, unused repositories from Ubuntu with.</p>
+<pre class="hljs"><code><div>    sudo apt autoclean
+</div></code></pre>
+<p>Returns.</p>
+<blockquote>
+<p>Reading package lists... Done<br>
+Building dependency tree... Done<br>
+Reading state information... Done<br>
+Del landscape-client 24.02-0ubuntu5.3 [124 kB]<br>
+Del landscape-common 24.02-0ubuntu5.3 [93.0 kB]</p>
+</blockquote>
+<p>This was the result when I ran it.</p>
+
+</body>
+</html>
