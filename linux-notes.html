@@ -366,7 +366,7 @@ code {
     });
   </script>
 <h1 id="linux-notes">Linux Notes</h1>
-<p>These are note on tasks that I have learnt using Linux.</p>
+<p>These are notes on tasks that I have learnt using Linux.</p>
 <h2 id="disc-usage">Disc usage</h2>
 <h3 id="report-filesystem-space-usage-df">Report filesystem space usage: df</h3>
 <p>To see the current disc where your home directory exists. This command shows information about the space used and available on your filesystem.</p>
@@ -436,6 +436,17 @@ code {
 <h3 id="for-applications-installed-via-source-code">For applications installed via source code</h3>
 <p>If you compile an application from source, the standard installation prefix is often <code>/usr/local</code>, which places the executable in <code>/usr/local/bin</code>.</p>
 <p>This directory is part of the default <strong>PATH</strong>, enabling easy terminal access.</p>
+<h2 id="tree-command">Tree command</h2>
+<p>The <code>tree</code> command is a recursive directory listing program that produces a depth-indented listing of files.</p>
+<p>To install the <code>tree</code> command.</p>
+<pre class="hljs"><code><div>    sudo apt install tree
+</div></code></pre>
+<p>To use the <code>tree</code> command.</p>
+<pre class="hljs"><code><div>    tree -L 1 /home/alanr
+</div></code></pre>
+<p>This lists the current directory and its subdirectories up to a depth of 1 level from the <strong>/home/alanr</strong> directory.</p>
+<p>Returns.</p>
+<p><img src="/assets/images/tree-command.jpg" alt="Tree command" title="Tree command"></p>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 # Linux Notes
 
-These are note on tasks that I have learnt using Linux.
+These are notes on tasks that I have learnt using Linux.
 
 ## Disc usage
 
@@ -123,3 +123,24 @@ This allows the application to appear in the graphical application menu.
 If you compile an application from source, the standard installation prefix is often ``/usr/local``, which places the executable in ``/usr/local/bin``.
 
 This directory is part of the default **PATH**, enabling easy terminal access.
+
+## Tree command
+
+The ``tree`` command is a recursive directory listing program that produces a depth-indented listing of files.
+
+To install the ``tree`` command.
+
+```bash
+    sudo apt install tree
+```
+To use the ``tree`` command.
+
+```bash
+    tree -L 1 /home/alanr
+```
+
+This lists the current directory and its subdirectories up to a depth of 1 level from the **/home/alanr** directory.
+
+Returns.
+
+![Tree command](/assets/images/tree-command.jpg "Tree command")
