@@ -1,374 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>basic-linux-commands.md</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-
-<style>
-/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
-body {
-	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
-	font-size: var(--vscode-markdown-font-size, 14px);
-	padding: 0 26px;
-	line-height: var(--vscode-markdown-line-height, 22px);
-	word-wrap: break-word;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Linux Notes</title>
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="assets/css/starter-template.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
+<style type="text/css">
+html {
+	font-size: 90.0%;
 }
 
-#code-csp-warning {
-	position: fixed;
-	top: 0;
-	right: 0;
-	color: white;
-	margin: 16px;
-	text-align: center;
-	font-size: 12px;
-	font-family: sans-serif;
-	background-color:#444444;
-	cursor: pointer;
-	padding: 6px;
-	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+h2 {
+	margin-top: 60px;
 }
 
-#code-csp-warning:hover {
-	text-decoration: none;
-	background-color:#007acc;
-	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+h4, h3 {
+	padding-top: 40px!;		
 }
 
-body.scrollBeyondLastLine {
-	margin-bottom: calc(100vh - 22px);
+p {
+	font-size: 1.2em;
+}
+h4 {
+	font-size: 1.4em;
 }
 
-body.showEditorSelection .code-line {
-	position: relative;
+img, pre.prettyprint {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
 }
+h1, h2, h3, h4, h5, h6 {
+    color:#007bff;
 
-body.showEditorSelection .code-active-line:before,
-body.showEditorSelection .code-line:hover:before {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: -12px;
-	height: 100%;
 }
-
-body.showEditorSelection li.code-active-line:before,
-body.showEditorSelection li.code-line:hover:before {
-	left: -30px;
-}
-
-.vscode-light.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.15);
-}
-
-.vscode-light.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(0, 0, 0, 0.40);
-}
-
-.vscode-light.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
-
-.vscode-dark.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.4);
-}
-
-.vscode-dark.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 255, 255, 0.60);
-}
-
-.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
-
-.vscode-high-contrast.showEditorSelection .code-active-line:before {
-	border-left: 3px solid rgba(255, 160, 0, 0.7);
-}
-
-.vscode-high-contrast.showEditorSelection .code-line:hover:before {
-	border-left: 3px solid rgba(255, 160, 0, 1);
-}
-
-.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
-	border-left: none;
-}
-
-img {
-	max-width: 100%;
-	max-height: 100%;
-}
-
-a {
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
-a:focus,
-input:focus,
-select:focus,
-textarea:focus {
-	outline: 1px solid -webkit-focus-ring-color;
-	outline-offset: -1px;
-}
-
-hr {
-	border: 0;
-	height: 2px;
-	border-bottom: 2px solid;
-}
-
-h1 {
-	padding-bottom: 0.3em;
-	line-height: 1.2;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-}
-
-h1, h2, h3 {
-	font-weight: normal;
-}
-
-table {
-	border-collapse: collapse;
-}
-
-table > thead > tr > th {
-	text-align: left;
-	border-bottom: 1px solid;
-}
-
-table > thead > tr > th,
-table > thead > tr > td,
-table > tbody > tr > th,
-table > tbody > tr > td {
-	padding: 5px 10px;
-}
-
-table > tbody > tr + tr > td {
-	border-top: 1px solid;
-}
-
 blockquote {
-	margin: 0 7px 0 5px;
-	padding: 0 16px 0 10px;
-	border-left-width: 5px;
-	border-left-style: solid;
+    border-left: 4px solid #999;
+    padding-left: 1rem;
+    page-break-inside: avoid;
 }
-
-code {
-	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
-	font-size: 1em;
-	line-height: 1.357em;
-}
-
-body.wordWrap pre {
-	white-space: pre-wrap;
-}
-
-pre:not(.hljs),
-pre.hljs code > div {
-	padding: 16px;
-	border-radius: 3px;
-	overflow: auto;
-}
-
-pre code {
-	color: var(--vscode-editor-foreground);
-	tab-size: 4;
-}
-
-/** Theming */
-
-.vscode-light pre {
-	background-color: rgba(220, 220, 220, 0.4);
-}
-
-.vscode-dark pre {
-	background-color: rgba(10, 10, 10, 0.4);
-}
-
-.vscode-high-contrast pre {
-	background-color: rgb(0, 0, 0);
-}
-
-.vscode-high-contrast h1 {
-	border-color: rgb(0, 0, 0);
-}
-
-.vscode-light table > thead > tr > th {
-	border-color: rgba(0, 0, 0, 0.69);
-}
-
-.vscode-dark table > thead > tr > th {
-	border-color: rgba(255, 255, 255, 0.69);
-}
-
-.vscode-light h1,
-.vscode-light hr,
-.vscode-light table > tbody > tr + tr > td {
-	border-color: rgba(0, 0, 0, 0.18);
-}
-
-.vscode-dark h1,
-.vscode-dark hr,
-.vscode-dark table > tbody > tr + tr > td {
-	border-color: rgba(255, 255, 255, 0.18);
-}
-
-</style>
-
-<style>
-/* Tomorrow Theme */
-/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
-/* Original theme - https://github.com/chriskempson/tomorrow-theme */
-
-/* Tomorrow Comment */
-.hljs-comment,
-.hljs-quote {
-	color: #8e908c;
-}
-
-/* Tomorrow Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-regexp,
-.hljs-deletion {
-	color: #c82829;
-}
-
-/* Tomorrow Orange */
-.hljs-number,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params,
-.hljs-meta,
-.hljs-link {
-	color: #f5871f;
-}
-
-/* Tomorrow Yellow */
-.hljs-attribute {
-	color: #eab700;
-}
-
-/* Tomorrow Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-addition {
-	color: #718c00;
-}
-
-/* Tomorrow Blue */
-.hljs-title,
-.hljs-section {
-	color: #4271ae;
-}
-
-/* Tomorrow Purple */
-.hljs-keyword,
-.hljs-selector-tag {
-	color: #8959a8;
-}
-
-.hljs {
-	display: block;
-	overflow-x: auto;
-	color: #4d4d4c;
-	padding: 0.5em;
-}
-
-.hljs-emphasis {
-	font-style: italic;
-}
-
-.hljs-strong {
-	font-weight: bold;
+:target:before {
+  content: "";
+  display: block;
+  height: 80px; /* adjust this value to your needs */
+  margin: -80px 0 0; /* this should be a negative value of the height above */
 }
 </style>
-
-<style>
-/*
- * Markdown PDF CSS
- */
-
- body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
-	padding: 0 12px;
-}
-
-pre {
-	background-color: #f8f8f8;
-	border: 1px solid #cccccc;
-	border-radius: 3px;
-	overflow-x: auto;
-	white-space: pre-wrap;
-	overflow-wrap: break-word;
-}
-
-pre:not(.hljs) {
-	padding: 23px;
-	line-height: 19px;
-}
-
-blockquote {
-	background: rgba(127, 127, 127, 0.1);
-	border-color: rgba(0, 122, 204, 0.5);
-}
-
-.emoji {
-	height: 1.4em;
-}
-
-code {
-	font-size: 14px;
-	line-height: 19px;
-}
-
-/* for inline code */
-:not(pre):not(.hljs) > code {
-	color: #C9AE75; /* Change the old color so it seems less like an error */
-	font-size: inherit;
-}
-
-/* Page Break : use <div class="page"/> to insert page break
--------------------------------------------------------- */
-.page {
-	page-break-after: always;
-}
-
-</style>
-
-<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <body>
-  <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
-          ? 'dark'
-          : 'default'
-    });
-  </script>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Linux notes</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Basic Linux commands <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <div class="starter-template">
+
 <h1 id="basic-linux-commands">Basic Linux commands</h1>
 <h2 id="cat">cat</h2>
 <p>Cat will scroll off the screen. To stop this happening use.</p>
-<pre class="hljs"><code><div>    cat .bashrc | less
+<pre class="prettyprint"><code><div>    cat .bashrc | less
 </div></code></pre>
 <p>This will show the first page of information and then allow you to use the arrow keys, Page Up or Page Down or use the Home or End keys. Type <code>q</code> to quit.</p>
 <h2 id="chmod">chmod</h2>
@@ -395,7 +109,7 @@ code {
 <p>-rw-r--r-- 1 alanr alanr 0 Sep 10 14:34 examples.txt</p>
 </blockquote>
 <p>Each group has different permissions. I want to change this so owner (user) and group have read and write permissions and leave others to have read permissions.</p>
-<pre class="hljs"><code><div>    chmod 664 example.txt
+<pre class="prettyprint"><code><div>    chmod 664 example.txt
 </div></code></pre>
 <p>Will change <code>example.txt</code> permissions to.</p>
 <blockquote>
@@ -406,15 +120,15 @@ code {
 <p>A combination of the letters <code>ugoa</code> controls which users' access to the file will be changed: the user who owns it (<code>u</code>), other users in the file's group (<code>g</code>), other users not in the file's group (<code>o</code>), or all  users  (<code>a</code>).   If none of these are given, the effect is as if (<code>a</code>) were given, but bits that are set in the umask are not affected.</p>
 <p>The operator <strong>+</strong> causes the selected file mode bits to be added to the existing file mode bits of each  file; <strong>-</strong> causes them to be removed; and <strong>=</strong> causes them to be added and causes unmentioned bits to be removed except that a directory's unmentioned set user and group ID bits are not affected.</p>
 <p>Modify all permissions to read-write.</p>
-<pre class="hljs"><code><div>    chmod a+rw example.txt
+<pre class="prettyprint"><code><div>    chmod a+rw example.txt
 </div></code></pre>
 <p>Where <code>a</code> means all.</p>
 <p>I could also remove permissions with.</p>
-<pre class="hljs"><code><div>    chmod a+r-w example.txt
+<pre class="prettyprint"><code><div>    chmod a+r-w example.txt
 </div></code></pre>
 <p>This removes the write permissions but allows all users to read the text file.</p>
 <p>If I decide I want to restrict write permissions for others I can do this.</p>
-<pre class="hljs"><code><div>    chmod ug+rw,o+r-w example.txt
+<pre class="prettyprint"><code><div>    chmod ug+rw,o+r-w example.txt
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -423,7 +137,7 @@ code {
 <h2 id="chown">chown</h2>
 <p>The <code>chown</code> command allows you to change the <strong>owner</strong> and <strong>group</strong> owner of a file. Listing our <code>example.txt</code> file with ls -l we can see <em>alanr</em> <em>alanr</em> in the file description. The first of these indicates the name of the file owner, which in this case is the user <em>alanr</em>. The second entry shows that the name of the group owner is also <em>alanr</em>. Each user has a default group created when the user is created. That user is the only member of that group. This shows that the file is not shared with any other groups of users.</p>
 <p>You can use <code>chown</code> to change the owner or group, or both of a file. You must provide the name of the owner and the group, separated by a <strong>:</strong> character. You will need to use <strong>sudo</strong>. To retain dave as the owner of the file but to set mary as the group owner, use this command:</p>
-<pre class="hljs"><code><div>    sudo chown root:root example.txt
+<pre class="prettyprint"><code><div>    sudo chown root:root example.txt
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -432,34 +146,34 @@ code {
 <p>Now if I go to add text to this file I can't because only <strong>root</strong> has read-write access.</p>
 <h1 id="curl">curl</h1>
 <p>The <code>curl</code> command is a tool to retrieve information and files from Uniform Resource Locators (URLs) or internet addresses.</p>
-<pre class="hljs"><code><div>    curl https://raw.githubusercontent.com/torvalds/linux/master/kernel/events/core.c -o core.c
+<pre class="prettyprint"><code><div>    curl https://raw.githubusercontent.com/torvalds/linux/master/kernel/events/core.c -o core.c
 </div></code></pre>
 <p>This command retrieves the file for us. Note that you need to specify the name of the file to save it in, using the <code>-o</code> (output) option. If you do not do this, the contents of the file are scrolled rapidly in the terminal window but not saved to your computer.</p>
 <h2 id="df">df</h2>
 <p>The <code>df</code> command shows the size, used space, and available space on the mounted filesystems of your computer.</p>
 <p>Two of the most useful options are the <code>-h</code> (human readable) and <code>-x</code> (exclude) options. The human-readable option displays the sizes in Mb or Gb instead of in bytes. The exclude option allows you to tell <code>df</code> to discount filesystems you are not interested in. For example, the <code>squashfs</code> pseudo-filesystems that are created when you install an application with the snap command.</p>
-<pre class="hljs"><code><div>    df -h -x squashfs
+<pre class="prettyprint"><code><div>    df -h -x squashfs
 </div></code></pre>
 <h2 id="diff">diff</h2>
 <p>The <code>diff</code> command compares two text files and shows the differences between them. There are many options to tailor the display to your requirements.</p>
 <p>The <code>-y</code> (side by side) option shows the line differences side by side. The <code>-w</code> (width) option lets you specify the maximum line width to use to avoid wraparound lines. The two files are called <em>alpha1.txt</em> and <em>alpha2.txt</em> in this example. The <code>--suppress-common-lines</code> prevents diff from listing the matching lines, letting you focus on the lines which have differences.</p>
-<pre class="hljs"><code><div>diff -y -W 70 alpha1.txt alpha2.txt --suppress-common-lines
+<pre class="prettyprint"><code><div>diff -y -W 70 alpha1.txt alpha2.txt --suppress-common-lines
 </div></code></pre>
 <h2 id="echo">echo</h2>
 <p>The <code>echo</code> command prints (echoes) a string of text to the terminal window.</p>
 <p>The command below will print the words &quot;A string of text&quot; on the terminal window.</p>
-<pre class="hljs"><code><div>    <span class="hljs-built_in">echo</span> A string of text
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">echo</span> A string of text
 </div></code></pre>
 <p>The <code>echo</code> command can show the value of environment variables, for example, the <code>$USER</code>, <code>$HOME</code>, and <code>$PATH</code> environment variables. These hold the values of the name of the user, the user's home directory, and the path searched for matching commands when the user types something on the command line.</p>
-<pre class="hljs"><code><div>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$USER</span>
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$USER</span>
 </div></code></pre>
 <h2 id="find">find</h2>
 <p>Use the <code>find</code> command to track down files that you know exist if you can't remember where you put them. You must tell <code>find</code> where to start searching from and what it is looking for. In this example, the <strong>.</strong> matches the current folder and the <code>-name</code> option tells find to look for files with a name that matches the search pattern. Use <code>-iname</code> for case insensitive searches.</p>
 <p>You can use wildcards, where <code>*</code> represents any sequence of characters and <code>?</code> represents any single character. We're using <code>*.cs</code> to match any file name containing the sequence &quot;ones.&quot; This would match words like bones, stones, and lonesome.</p>
-<pre class="hljs"><code><div>    find . -iname *.cs
+<pre class="prettyprint"><code><div>    find . -iname *.cs
 </div></code></pre>
 <p>You can limit your search results by specifying the <strong>type</strong> you are searching for. <strong>f</strong> for files or <strong>d</strong> for directory.</p>
-<pre class="hljs"><code><div>    find . -<span class="hljs-built_in">type</span> d  -iname Debug
+<pre class="prettyprint"><code><div>    find . -<span class="hljs-built_in">type</span> d  -iname Debug
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -470,10 +184,10 @@ code {
 </blockquote>
 <h1 id="finger">finger</h1>
 <p>The <code>finger</code> command gives you a short dump of information about a user, including the time of the user's last login, the user's home directory, and the user account's full name.</p>
-<pre class="hljs"><code><div>    finger alanr
+<pre class="prettyprint"><code><div>    finger alanr
 </div></code></pre>
 <p>Returns.</p>
-<pre class="hljs"><code><div>Login: alanr                            Name:     
+<pre class="prettyprint"><code><div>Login: alanr                            Name:     
 Directory: /home/alanr                  Shell: /bin/bash      
 On since Wed Sep 10 14:14 (AEST) on pts/1   2 hours 9 minutes idle        
      (messages off)       
@@ -482,10 +196,10 @@ No Plan.
 </div></code></pre>
 <h1 id="free">free</h1>
 <p>The <code>free</code> command gives you a summary of the memory usage with your computer. It does this for both the main Random Access Memory (RAM) and swap memory. The <code>-h</code> (human) option is used to provide human-friendly numbers and units. Without this option, the figures are presented in bytes.</p>
-<pre class="hljs"><code><div>    free -h
+<pre class="prettyprint"><code><div>    free -h
 </div></code></pre>
 <p>Returns.</p>
-<pre class="hljs"><code><div>               total        used        free      shared  buff/cache   available      
+<pre class="prettyprint"><code><div>               total        used        free      shared  buff/cache   available      
 Mem:            15Gi       439Mi        14Gi       3.0Mi       437Mi        14Gi      
 Swap:          4.0Gi          0B       4.0Gi
 </div></code></pre>
@@ -493,7 +207,7 @@ Swap:          4.0Gi          0B       4.0Gi
 <p>https://www.geeksforgeeks.org/linux-unix/grep-command-in-unixlinux/</p>
 <h2 id="groups">groups</h2>
 <p>The <code>groups</code> command tells you which groups a user is a member of.</p>
-<pre class="hljs"><code><div>    groups alanr
+<pre class="prettyprint"><code><div>    groups alanr
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -550,22 +264,22 @@ Swap:          4.0Gi          0B       4.0Gi
 </table>
 <h3 id="creating-a-tar-archive">Creating a tar Archive</h3>
 <p>To create a tar archive of a directory named <code>examples</code>, you can use the following command:</p>
-<pre class="hljs"><code><div>    tar -cvf examples.tar examples
+<pre class="prettyprint"><code><div>    tar -cvf examples.tar examples
 </div></code></pre>
 <p>This command creates a tar archive named <code>examples.tar</code> containing the contents of the <code>examples</code> directory. The <code>-c</code> option is for creating an archive, <code>-v</code> enables verbose output, and <code>-f</code> specifies the name of the archive file.</p>
 <h3 id="extracting-a-tar-archive">Extracting a tar Archive</h3>
 <p>To extract the contents of a tar archive named <code>examples.tar</code>, you can use the following command:</p>
-<pre class="hljs"><code><div>    tar -xvf examples.tar
+<pre class="prettyprint"><code><div>    tar -xvf examples.tar
 </div></code></pre>
 <p>This command extracts the contents of the <code>examples.tar</code> archive into the current directory. The <code>-x</code> option is for extracting files, <code>-v</code> enables verbose output, and <code>-f</code> specifies the name of the archive file.</p>
 <h3 id="creating-a-compressed-tar-archive">Creating a Compressed tar Archive</h3>
 <p>To create a compressed tar archive using gzip, you can use the following command:</p>
-<pre class="hljs"><code><div>    tar -czvf examples.tar.gz examples
+<pre class="prettyprint"><code><div>    tar -czvf examples.tar.gz examples
 </div></code></pre>
 <p>This command creates a gzip-compressed tar archive named <code>examples.tar.gz</code> containing the contents of the <code>examples</code> directory. The <code>-z</code> option enables gzip compression.</p>
 <h3 id="extracting-a-compressed-tar-archive">Extracting a Compressed tar Archive</h3>
 <p>To extract the contents of a gzip-compressed tar archive named <code>examples.tar.gz</code>, you can use the following command:</p>
-<pre class="hljs"><code><div>    tar -xzvf examples.tar.gz
+<pre class="prettyprint"><code><div>    tar -xzvf examples.tar.gz
 </div></code></pre>
 <p>This command extracts the contents of the <code>examples.tar.gz</code> archive into the current directory. The <code>-x</code> option is for extracting files, <code>-z</code> enables gzip decompression, <code>-v</code> enables verbose output, and <code>-f</code> specifies the name of the archive file.</p>
 <h2 id="creating-a-gzip-archive">Creating a gzip archive</h2>
@@ -608,72 +322,72 @@ Swap:          4.0Gi          0B       4.0Gi
 </table>
 <h3 id="basic-compression-using-gzip-command-in-linux">Basic Compression using gzip Command in Linux</h3>
 <p>To compress a file named <code>mydoc.txt</code>, the following command can be used:</p>
-<pre class="hljs"><code><div>    gzip mydoc.txt    
+<pre class="prettyprint"><code><div>    gzip mydoc.txt    
 </div></code></pre>
 <p>This command will create a compressed file named <code>mydoc.txt.gz</code> and remove the original <code>mydoc.txt</code> file.</p>
 <p>If you don't want to remove the original file, use the <code>-k</code> option:</p>
-<pre class="hljs"><code><div>    gzip -k mydoc.txt    
+<pre class="prettyprint"><code><div>    gzip -k mydoc.txt    
 </div></code></pre>
 <p>This command will create a compressed file named <code>mydoc.txt.gz</code> while keeping the original <code>mydoc.txt</code> file intact.</p>
 <h3 id="how-to-decompress-a-gzip-file-in-linux">How to Decompress a gzip File in Linux</h3>
 <p>The basic syntax of the <code>gzip</code> command for decompressing a file is as follows:</p>
-<pre class="hljs"><code><div>    gzip -d filename.gz
+<pre class="prettyprint"><code><div>    gzip -d filename.gz
 </div></code></pre>
 <p>This command decompresses the specified <code>gzip</code> file, leaving the original uncompressed file intact.</p>
 <h3 id="recursively-compressing-files-using-gzip-command">Recursively Compressing Files using gzip Command</h3>
 <p>To compress all files in a directory and its subdirectories, the <code>-r</code> option can be used:</p>
-<pre class="hljs"><code><div>    gzip -r examples
+<pre class="prettyprint"><code><div>    gzip -r examples
 </div></code></pre>
 <p>This will compress all files into separate .gz files in the <code>examples</code> directory and its subdirectories. A far better way to do this is to create a tar archive and then compress that.</p>
-<pre class="hljs"><code><div>    tar -cvf examples.tar examples
+<pre class="prettyprint"><code><div>    tar -cvf examples.tar examples
     gzip examples.tar
 </div></code></pre>
 <p>This creates a single compressed file named <code>examples.tar.gz</code>.</p>
 <h3 id="force-compression-using-gzip-command">Force Compression Using gzip Command</h3>
 <p>In cases where the compressed file already exists, the <code>-f</code> option forcefully overwrites it:</p>
-<pre class="hljs"><code><div>    gzip -f example.txt
+<pre class="prettyprint"><code><div>    gzip -f example.txt
 </div></code></pre>
 <p>This command compresses <code>example.txt</code>, overwriting any existing <code>example.txt.gz</code> file.</p>
 <h3 id="compressing-multiple-files-using-gzip-command">Compressing Multiple Files Using gzip Command</h3>
 <p><code>Gzip</code> can compress multiple files simultaneously by providing their names as arguments:</p>
-<pre class="hljs"><code><div>    gzip file1.txt file2.txt file3.txt
+<pre class="prettyprint"><code><div>    gzip file1.txt file2.txt file3.txt
 </div></code></pre>
 <p>This command compresses &quot;file1.txt,&quot; &quot;file2.txt,&quot; and &quot;file3.txt&quot; individually.</p>
 <h3 id="compressing-a-set-of-files-in-a-directory">Compressing a set of files in a directory</h3>
 <p>I have a number of <code>.sh</code> scripts in a directory as well as other files. I want to compress all of the <code>.sh</code> files into an archive file named scripts.</p>
-<pre class="hljs"><code><div>    tar -czf scripts.tar.gz *.sh
+<pre class="prettyprint"><code><div>    tar -czf scripts.tar.gz *.sh
 </div></code></pre>
 <p>To check the files in the archive use.</p>
-<pre class="hljs"><code><div>    tar -tzf scripts.tar.gz
+<pre class="prettyprint"><code><div>    tar -tzf scripts.tar.gz
 </div></code></pre>
 <h2 id="compressing-with-zip">Compressing with zip</h2>
 <p><code>zip</code> is installed on Ubuntu. We can use this when we are sending files across Linux, MacOS and Windows.</p>
-<pre class="hljs"><code><div>    zip -r examples.zip examples/
+<pre class="prettyprint"><code><div>    zip -r examples.zip examples/
 </div></code></pre>
 <p>This command creates a zip archive named <code>examples.zip</code> containing the contents of the <code>examples</code> directory. The <code>-r</code> option is for creating an archive recursively, including all files and subdirectories within the specified directory.</p>
 <h3 id="extracting-a-zip-archive">Extracting a zip Archive</h3>
 <p>To extract the contents of a zip archive named <code>examples.zip</code>, you can use the following command:</p>
-<pre class="hljs"><code><div>    unzip examples.zip
+<pre class="prettyprint"><code><div>    unzip examples.zip
 </div></code></pre>
 <p>This command extracts the contents of the <code>examples.zip</code> archive into the current directory.</p>
 <p>I can extract these to another directory with the <code>-d</code> option.</p>
-<pre class="hljs"><code><div>    unzip examples.zip -d extracted
+<pre class="prettyprint"><code><div>    unzip examples.zip -d extracted
 </div></code></pre>
 <h2 id="head">head</h2>
 <p>The head command gives you a listing of the first 10 lines of a file. If you want to see fewer or more lines, use the <code>-n</code> (number) option. In this examples, we use head with its default of 10 lines. We then repeat the command asking for only five lines.</p>
 <p>Print the first 10 lines.</p>
-<pre class="hljs"><code><div>    head examples.txt
+<pre class="prettyprint"><code><div>    head examples.txt
 </div></code></pre>
 <p>Print the first 5 lines.</p>
-<pre class="hljs"><code><div>    head -n5 examples.txt
+<pre class="prettyprint"><code><div>    head -n5 examples.txt
 </div></code></pre>
 <h2 id="less">less</h2>
 <p>The <code>less</code> command allows you to view files without opening an editor. It's faster to use, and there's no chance of you inadvertently modifying the file. With less you can scroll forward and backward through the file using the Up and Down Arrow keys, the PgUp and PgDn keys and the Home and End keys. Press the Q key to quit from less.</p>
-<pre class="hljs"><code><div>    less .bashrc
+<pre class="prettyprint"><code><div>    less .bashrc
 </div></code></pre>
 <p><strong>Note:</strong> it is better to use <code>less</code> than <code>cat</code> for large files. Using <code>cat</code> will scroll the whole file whereas with <code>less</code> you only see the first page of the file.</p>
 <p>You can also pipe the output from other commands into <code>less</code>. To see the output from <code>ls</code> for a listing of your entire hard drive, use the following command:</p>
-<pre class="hljs"><code><div>    ls -R / | less
+<pre class="prettyprint"><code><div>    ls -R / | less
 </div></code></pre>
 <p>While you are looking through the content you can search for text using the <code>/</code> (backslash) followed by the search term. You can go backwards with the <code>?</code> and add the search term.</p>
 <h2 id="redirection">Redirection</h2>
@@ -685,11 +399,11 @@ Swap:          4.0Gi          0B       4.0Gi
 <li>Standard Error (<code>stderr</code>) - this is usually the screen (error messages)</li>
 </ol>
 <h3 id="output-to-stdout">Output to stdout</h3>
-<pre class="hljs"><code><div>    ls 1&gt; filelist.txt
+<pre class="prettyprint"><code><div>    ls 1&gt; filelist.txt
 </div></code></pre>
 <p>This command lists the files in the current directory and redirects the output (<code>stdout</code>) to a file named <code>filelist.txt</code>. The <code>1&gt;</code> operator specifies that the standard output (file descriptor 1) should be redirected to the specified file.</p>
 <h3 id="output-to-stderr">Output to stderr</h3>
-<pre class="hljs"><code><div>    ls non_existent_file 2&gt; errorlog.txt
+<pre class="prettyprint"><code><div>    ls non_existent_file 2&gt; errorlog.txt
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -697,37 +411,37 @@ Swap:          4.0Gi          0B       4.0Gi
 </blockquote>
 <p>This command attempts to list a non-existent file, which generates an error message. The <code>2&gt;</code> operator redirects the standard error (file descriptor 2) to a file named <code>errorlog.txt</code>.</p>
 <h3 id="output-to-both-stdout-and-stderr">Output to both stdout and stderr</h3>
-<pre class="hljs"><code><div>    ls existing_file non_existent_file &gt; output.txt 2&gt;&amp;1
+<pre class="prettyprint"><code><div>    ls existing_file non_existent_file &gt; output.txt 2&gt;&amp;1
 </div></code></pre>
 <p><strong>Note:</strong> I can leave of the <code>1</code> in front of the <code>&gt;</code> redirection operator because <code>stdout</code> is the default.</p>
 <p>This command lists both an existing file and a non-existent file. The standard output is redirected to <code>output.txt</code>, and the standard error is also redirected to the same file using <code>2&gt;&amp;1</code>.</p>
 <h3 id="multiple-redirections">Multiple redirections</h3>
 <p>Redirect both standard output and standard error to different files.</p>
-<pre class="hljs"><code><div>    cp -r myfiles ~/files_backup &gt; success.txt 2&gt; errorlog.txt
+<pre class="prettyprint"><code><div>    cp -r myfiles ~/files_backup &gt; success.txt 2&gt; errorlog.txt
 </div></code></pre>
 <p>This command copies the directory <code>myfiles</code> to a backup location in the user's home directory. The standard output (success messages) is redirected to <code>success.txt</code>, while any error messages are redirected to <code>errorlog.txt</code>.</p>
 <p>Redirect standard output and standard error to the same file.</p>
-<pre class="hljs"><code><div>    cp -r myfiles ~/files_backup &gt; status.txt 2&gt;&amp;1
+<pre class="prettyprint"><code><div>    cp -r myfiles ~/files_backup &gt; status.txt 2&gt;&amp;1
 </div></code></pre>
 <p>Or.</p>
-<pre class="hljs"><code><div>    cp -r myfiles ~/files_backup &amp;&gt; status.txt
+<pre class="prettyprint"><code><div>    cp -r myfiles ~/files_backup &amp;&gt; status.txt
 </div></code></pre>
 <p>This command copies the directory <code>myfiles</code> to a backup location in the user's home directory. Both standard output and standard error are redirected to a single file named <code>status.txt</code>.</p>
 <p><strong>Note:</strong> be careful with redirecting files.</p>
-<pre class="hljs"><code><div> &gt;filelist.txt
+<pre class="prettyprint"><code><div> &gt;filelist.txt
 </div></code></pre>
 <p>This command creates an empty file named <code>filelist.txt</code> or truncates the file if it already exists. Any existing content in the file will be lost.</p>
 <h3 id="appending-to-files">Appending to files</h3>
 <p>You can append text to a file without overwriting its existing content using the <code>&gt;&gt;</code> operator.</p>
-<pre class="hljs"><code><div>    <span class="hljs-built_in">echo</span> <span class="hljs-string">"New line of text"</span> &gt;&gt; myfile.txt
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">echo</span> <span class="hljs-string">"New line of text"</span> &gt;&gt; myfile.txt
 </div></code></pre>
 <p>This command appends the text &quot;New line of text&quot; to the end of the file named <code>myfile.txt</code>. If the file does not exist, it will be created.</p>
 <h2 id="exploring-environment-variables-and-path">Exploring environment variables and PATH</h2>
 <p>The shell we are using has a few variables or parameters that affect how the shell works. You can see these variables by using the <code>printenv</code> command.</p>
-<pre class="hljs"><code><div>    printenv
+<pre class="prettyprint"><code><div>    printenv
 </div></code></pre>
 <p>Or.</p>
-<pre class="hljs"><code><div>    env
+<pre class="prettyprint"><code><div>    env
 </div></code></pre>
 <p>This produces a fairly big list of information but there are a few variables to note.</p>
 <table>
@@ -785,11 +499,11 @@ Swap:          4.0Gi          0B       4.0Gi
 </tbody>
 </table>
 <p>You can see the value of a specific variable by using the <code>echo</code> command followed by the variable name prefixed with a dollar sign (<code>$</code>).</p>
-<pre class="hljs"><code><div>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span>
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">echo</span> <span class="hljs-variable">$PATH</span>
 </div></code></pre>
 <p>This is the most important to us. We can run commands like <code>ls</code>, <code>cd</code>, and <code>cat</code> because the shell looks in the directories listed in the PATH variable to find these commands.</p>
 <p>To find out where a command is located use the <code>which</code> command.</p>
-<pre class="hljs"><code><div>    <span class="hljs-built_in">which</span> ls
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">which</span> ls
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -797,11 +511,11 @@ Swap:          4.0Gi          0B       4.0Gi
 </blockquote>
 <h3 id="editing-the-path-variable">Editing the PATH variable</h3>
 <p>You can add your own directories to the PATH variable by editing the ~/.bash_profile or ~/.bashrc file. You can use any text editor to do this. Here we use <code>nano</code>.</p>
-<pre class="hljs"><code><div>    nano ~/.bash_profile
+<pre class="prettyprint"><code><div>    nano ~/.bash_profile
 </div></code></pre>
 <p>This file may or may not exist.</p>
 <p>Add a line like this to the end of the file.</p>
-<pre class="hljs"><code><div>    <span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/home/alanr/scripts
+<pre class="prettyprint"><code><div>    <span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/home/alanr/scripts
 </div></code></pre>
 <p>This line adds the directory <code>/home/alanr/scripts</code> to the existing PATH variable. The <code>$PATH</code> at the beginning ensures that the current contents of the PATH variable are preserved, and the new directory is appended to it.</p>
 <h2 id="challenge">Challenge</h2>
@@ -810,12 +524,12 @@ Swap:          4.0Gi          0B       4.0Gi
 <p>In this list there are user names and we want to extract a sorted and unique list of users.</p>
 <h3 id="step-1">Step 1</h3>
 <p>Extract the files from <strong>log.tar.gz</strong>.</p>
-<pre class="hljs"><code><div>    tar -xzf log.tar.gz
+<pre class="prettyprint"><code><div>    tar -xzf log.tar.gz
 </div></code></pre>
 <p>This extracts the file <strong>auth.log</strong>.</p>
 <h3 id="step-2">Step 2</h3>
 <p>Use grep to extract the lines containing the phrase <code>Disconnected from invalid user</code>.</p>
-<pre class="hljs"><code><div>    grep <span class="hljs-string">"Disconnected from invalid user"</span> auth.log
+<pre class="prettyprint"><code><div>    grep <span class="hljs-string">"Disconnected from invalid user"</span> auth.log
 </div></code></pre>
 <p>Returns lines in this format.</p>
 <blockquote>
@@ -824,11 +538,11 @@ Swap:          4.0Gi          0B       4.0Gi
 <h3 id="step-4">Step 4</h3>
 <p>You can see in the result above that the user name is in the 8th column and this is the same for all entries.</p>
 <p>Now use pipes and redirection to sort a unique list of names from auth.log with phrase above.</p>
-<pre class="hljs"><code><div>grep <span class="hljs-string">"Disconnected from invalid user"</span> auth.log | awk <span class="hljs-string">'{print $8}'</span> | sort -f -u &gt; users.txt
+<pre class="prettyprint"><code><div>grep <span class="hljs-string">"Disconnected from invalid user"</span> auth.log | awk <span class="hljs-string">'{print $8}'</span> | sort -f -u &gt; users.txt
 </div></code></pre>
 <h3 id="step-5">Step 5</h3>
 <p>Count the number of illegal user names.</p>
-<pre class="hljs"><code><div>    wc -l users.txt
+<pre class="prettyprint"><code><div>    wc -l users.txt
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -837,7 +551,7 @@ Swap:          4.0Gi          0B       4.0Gi
 <p>There a 467 unique illegal users.</p>
 <h2 id="find-information-about-your-linux-distribution">Find information about your Linux distribution</h2>
 <p>Look for information about your system with.</p>
-<pre class="hljs"><code><div>    ls -l /etc/*release
+<pre class="prettyprint"><code><div>    ls -l /etc/*release
 </div></code></pre>
 <p>Returns</p>
 <blockquote>
@@ -868,7 +582,7 @@ UBUNTU_CODENAME=noble<br>
 LOGO=ubuntu-logo</p>
 </blockquote>
 <p>What version of the Linux kernel are we using.</p>
-<pre class="hljs"><code><div>    uname -a
+<pre class="prettyprint"><code><div>    uname -a
 </div></code></pre>
 <p>Returns.</p>
 <blockquote>
@@ -877,18 +591,18 @@ LOGO=ubuntu-logo</p>
 <p>This information can be useful for troubleshooting.</p>
 <h2 id="find-system-hardware-and-disk-information">Find system hardware and disk information</h2>
 <p>Find out how much memory a system has.</p>
-<pre class="hljs"><code><div>    free -h
+<pre class="prettyprint"><code><div>    free -h
 </div></code></pre>
 <p>Returns.</p>
-<pre class="hljs"><code><div>               total        used        free      shared  buff/cache   available
+<pre class="prettyprint"><code><div>               total        used        free      shared  buff/cache   available
 Mem:            15Gi       579Mi        14Gi       3.5Mi       563Mi        15Gi
 Swap:          4.0Gi          0B       4.0Gi
 </div></code></pre>
 <p>Find information about your system.</p>
-<pre class="hljs"><code><div>    lscpu
+<pre class="prettyprint"><code><div>    lscpu
 </div></code></pre>
 <p>Returns.</p>
-<pre class="hljs"><code><div>Architecture:             x86_64
+<pre class="prettyprint"><code><div>Architecture:             x86_64
   CPU op-mode(s):         32-bit, 64-bit
   Address sizes:          39 bits physical, 48 bits virtual
   Byte Order:             Little Endian
@@ -900,13 +614,13 @@ Vendor ID:                GenuineIntel
 ...
 </div></code></pre>
 <p>Or you can find the same information in.</p>
-<pre class="hljs"><code><div>    cat /proc/cpuinfo
+<pre class="prettyprint"><code><div>    cat /proc/cpuinfo
 </div></code></pre>
 <p>To find out how much disk space a system has.</p>
-<pre class="hljs"><code><div>    df -h
+<pre class="prettyprint"><code><div>    df -h
 </div></code></pre>
 <p>Returns.</p>
-<pre class="hljs"><code><div>Filesystem      Size  Used Avail Use% Mounted on
+<pre class="prettyprint"><code><div>Filesystem      Size  Used Avail Use% Mounted on
 none            7.8G     0  7.8G   0% /usr/lib/modules/6.6.87.2-microsoft-standard-WSL2
 none            7.8G  4.0K  7.8G   1% /mnt/wsl
 drivers         930G  457G  473G  50% /usr/lib/wsl/drivers
@@ -915,12 +629,12 @@ drivers         930G  457G  473G  50% /usr/lib/wsl/drivers
 </div></code></pre>
 <p>The most interesting drive is <code>/</code> because this is our system. This is where our files are kept.</p>
 <p>Check how much disk space is used.</p>
-<pre class="hljs"><code><div>     sudo du -hd1 /
+<pre class="prettyprint"><code><div>     sudo du -hd1 /
 </div></code></pre>
 <p>Where <code>-h</code> is human readable and <code>d</code> is what level of depth to show. In this case it is <code>1</code>. <code>/</code> is from the root.</p>
 <p>You have to use sudo because some of the directories are owned by <code>root</code>.</p>
 <p>Returns.</p>
-<pre class="hljs"><code><div>4.3M    /etc
+<pre class="prettyprint"><code><div>4.3M    /etc
 6.9G    /usr
 560K    /run
 4.0K    /media
@@ -933,20 +647,20 @@ drivers         930G  457G  473G  50% /usr/lib/wsl/drivers
 8.0K    /snap
 </div></code></pre>
 <p>We can also check what hardware the system has with.</p>
-<pre class="hljs"><code><div>    sudo lshw | less
+<pre class="prettyprint"><code><div>    sudo lshw | less
 </div></code></pre>
 <p>We use <code>less</code> because this pumps out a large amount of information.</p>
 <p>To see what is attached to the PCI bus.</p>
-<pre class="hljs"><code><div>    lscpi
+<pre class="prettyprint"><code><div>    lscpi
 </div></code></pre>
 <p>To see what is attached to the USB bus.</p>
-<pre class="hljs"><code><div>    lsusb
+<pre class="prettyprint"><code><div>    lsusb
 </div></code></pre>
 <p>To find the systems network address.</p>
-<pre class="hljs"><code><div>    ip a
+<pre class="prettyprint"><code><div>    ip a
 </div></code></pre>
 <p>You can see your primary network address from.</p>
-<pre class="hljs"><code><div>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1420 qdisc mq state UP group default qlen 1000
+<pre class="prettyprint"><code><div>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1420 qdisc mq state UP group default qlen 1000
     link/ether 00:15:5d:c9:2d:50 brd ff:ff:ff:ff:ff:ff
     inet 172.30.170.164/20 brd 172.30.175.255 scope global eth0
 </div></code></pre>
@@ -955,5 +669,20 @@ drivers         930G  457G  473G  50% /usr/lib/wsl/drivers
 <p>172.30.170.164</p>
 </blockquote>
 
+
+
+</div><!-- starter-template -->
+</div><!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"/>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>
