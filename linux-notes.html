@@ -447,6 +447,62 @@ code {
 <p>This lists the current directory and its subdirectories up to a depth of 1 level from the <strong>/home/alanr</strong> directory.</p>
 <p>Returns.</p>
 <p><img src="/assets/images/tree-command.jpg" alt="Tree command" title="Tree command"></p>
+<h2 id="package-managers">Package managers</h2>
+<p>One of the easiest ways to keep your Linux system clean and speedy is to make sure your software packages are up-to-date. Package managers, like <code>apt</code>, <code>dnf</code>, or <code>pacman</code>, are your main tools for installing, updating, and removing software.</p>
+<h2 id="update-your-system">Update your system</h2>
+<p>Over time, outdated packages can cause system slowdowns, conflicts, or even security holes. Regular updates keep everything running smoothly and ensure you’re using the most optimized versions of your software. On your specific Linux system, run:</p>
+<pre class="hljs"><code><div>    sudo apt update &amp;&amp; sudo apt upgrade -y
+</div></code></pre>
+<p>These commands do two things. They fetch the latest list of available packages from your repositories and install any available updates for the packages you already have. Keeping your system updated boosts performance and ensures you're protected by the latest security patches.</p>
+<h3 id="remove-unused-packages">Remove unused packages</h3>
+<p>Sometimes, there could be many packages installed on your system that you don't need anymore. It's a good idea to uninstall them. You can list installed packages with this command:</p>
+<pre class="hljs"><code><div>    apt list --installed
+</div></code></pre>
+<p>This will list all packages installed. You can go though this list to remove packages you don't need with this command.</p>
+<pre class="hljs"><code><div>    sudo apt remove package-name
+</div></code></pre>
+<p>If you want to completely remove a package along with its system-wide configuration files, use:</p>
+<pre class="hljs"><code><div>    sudo apt purge package-name
+</div></code></pre>
+<p>As you install and uninstall software, leftover dependencies and unused packages can quietly pile up in your system. These don’t just take up disk space. They can sometimes slow down package management tasks or even cause version conflicts later on. To clean up what you don’t need anymore, you can use:</p>
+<pre class="hljs"><code><div>    sudo apt autoremove
+</div></code></pre>
+<p>This command scans your system for packages that were automatically installed as dependencies but are no longer required.</p>
+<h3 id="clean-package-cache">Clean package cache</h3>
+<p>Every time you install or update software, your package manager saves downloaded files in a cache. Over time, those cached packages can grow to even several gigabytes, especially if you’ve been updating regularly. You can safely clear it with:</p>
+<pre class="hljs"><code><div>    sudo apt clean
+</div></code></pre>
+<h2 id="systemctl">systemctl</h2>
+<p>A system that takes forever to boot or feels sluggish right after startup often has too many background services running. Some of these are essential, but others can quietly eat up resources. You can list Linux services and check which ones are enabled at startup with:</p>
+<pre class="hljs"><code><div>    systemctl list-unit-files --state=enabled
+</div></code></pre>
+<p>This lists all the services that launch automatically when your system boots. If you spot something you don’t need starting up every time, you can disable it safely with:</p>
+<pre class="hljs"><code><div>    sudo systemctl <span class="hljs-built_in">disable</span> service-name
+</div></code></pre>
+<p>To see what’s currently running and their statuses, you can use:</p>
+<pre class="hljs"><code><div>    systemctl --<span class="hljs-built_in">type</span>=service --state=running
+</div></code></pre>
+<p>By getting rid of unnecessary startup programs, you’ll get faster boot times and a system that feels lighter right from login. Just make sure not to disable anything critical.</p>
+<h2 id="find-search-for-unused-files">find: search for unused files</h2>
+<p>Sometimes the biggest space hogs aren’t obvious. Old backups, forgotten ISOs, or log files tucked deep in system folders. The find command is your all-purpose cleanup scout. It can locate files by size, age, or type, helping you decide what’s worth deleting.</p>
+<p>To find large files (say, over 500 MB) anywhere on your system, run:</p>
+<pre class="hljs"><code><div>    sudo find / -<span class="hljs-built_in">type</span> f -size +500M 2&gt;/dev/null
+</div></code></pre>
+<p>The <code>2&gt;/dev/null</code> part simply hides “permission denied” messages, so your results are easier to read. If you want to find old files you haven’t touched in months, try:</p>
+<pre class="hljs"><code><div>    find ~/ -<span class="hljs-built_in">type</span> f -mtime +90
+</div></code></pre>
+<p>This lists files in your home directory that haven’t been modified in over 90 days. Used wisely, the find command is one of the most powerful ways to track down old clutter and free up space without installing anything extra.</p>
+<h2 id="ps-list-heavy-processes">ps: list heavy processes</h2>
+<p>Even with plenty of free space, your system can still feel sluggish if certain programs are eating up too much CPU or memory. That’s where the ps command comes in. It helps you see what’s running and how resource-hungry each process is.</p>
+<p>A quick way to spot the top resource users is:</p>
+<pre class="hljs"><code><div>    ps aux --sort=-%mem | head
+</div></code></pre>
+<p>This lists all active processes, sorts them by memory usage (highest first), and shows the top few lines. For CPU usage instead, just sort by <code>%cpu</code>:</p>
+<pre class="hljs"><code><div>    ps aux --sort=-%cpu | head
+</div></code></pre>
+<p>You’ll see columns for the process owner, CPU and memory percentages, and the command that started it. If something’s hogging resources, note its PID, then you can end it with:</p>
+<pre class="hljs"><code><div>    sudo <span class="hljs-built_in">kill</span> PID <span class="hljs-comment"># Replace PID with the actual number shown in the list</span>
+</div></code></pre>
 
 </body>
 </html>

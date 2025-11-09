@@ -144,3 +144,115 @@ This lists the current directory and its subdirectories up to a depth of 1 level
 Returns.
 
 ![Tree command](/assets/images/tree-command.jpg "Tree command")
+
+## Package managers
+
+One of the easiest ways to keep your Linux system clean and speedy is to make sure your software packages are up-to-date. Package managers, like ``apt``, ``dnf``, or ``pacman``, are your main tools for installing, updating, and removing software.
+
+## Update your system
+
+Over time, outdated packages can cause system slowdowns, conflicts, or even security holes. Regular updates keep everything running smoothly and ensure you’re using the most optimized versions of your software. On your specific Linux system, run:
+
+```bash
+    sudo apt update && sudo apt upgrade -y
+```
+
+These commands do two things. They fetch the latest list of available packages from your repositories and install any available updates for the packages you already have. Keeping your system updated boosts performance and ensures you're protected by the latest security patches.
+
+### Remove unused packages
+
+Sometimes, there could be many packages installed on your system that you don't need anymore. It's a good idea to uninstall them. You can list installed packages with this command:
+
+```bash
+    apt list --installed
+```
+
+This will list all packages installed. You can go though this list to remove packages you don't need with this command.
+
+```bash
+    sudo apt remove package-name
+```
+
+If you want to completely remove a package along with its system-wide configuration files, use:
+
+```bash
+    sudo apt purge package-name
+```
+
+As you install and uninstall software, leftover dependencies and unused packages can quietly pile up in your system. These don’t just take up disk space. They can sometimes slow down package management tasks or even cause version conflicts later on. To clean up what you don’t need anymore, you can use:
+
+```bash
+    sudo apt autoremove
+```
+
+This command scans your system for packages that were automatically installed as dependencies but are no longer required.
+
+### Clean package cache
+
+Every time you install or update software, your package manager saves downloaded files in a cache. Over time, those cached packages can grow to even several gigabytes, especially if you’ve been updating regularly. You can safely clear it with:
+
+```bash
+    sudo apt clean
+```
+
+## systemctl
+
+A system that takes forever to boot or feels sluggish right after startup often has too many background services running. Some of these are essential, but others can quietly eat up resources. You can list Linux services and check which ones are enabled at startup with:
+
+```bash
+    systemctl list-unit-files --state=enabled
+```
+
+This lists all the services that launch automatically when your system boots. If you spot something you don’t need starting up every time, you can disable it safely with:
+
+```bash
+    sudo systemctl disable service-name
+```
+
+To see what’s currently running and their statuses, you can use:
+
+```bash
+    systemctl --type=service --state=running
+```
+
+By getting rid of unnecessary startup programs, you’ll get faster boot times and a system that feels lighter right from login. Just make sure not to disable anything critical.
+
+## find: search for unused files
+
+Sometimes the biggest space hogs aren’t obvious. Old backups, forgotten ISOs, or log files tucked deep in system folders. The find command is your all-purpose cleanup scout. It can locate files by size, age, or type, helping you decide what’s worth deleting.
+
+To find large files (say, over 500 MB) anywhere on your system, run:
+
+```bash
+    sudo find / -type f -size +500M 2>/dev/null
+```
+
+The ``2>/dev/null`` part simply hides “permission denied” messages, so your results are easier to read. If you want to find old files you haven’t touched in months, try:
+
+```bash
+    find ~/ -type f -mtime +90
+```
+
+This lists files in your home directory that haven’t been modified in over 90 days. Used wisely, the find command is one of the most powerful ways to track down old clutter and free up space without installing anything extra.
+
+## ps: list heavy processes
+
+Even with plenty of free space, your system can still feel sluggish if certain programs are eating up too much CPU or memory. That’s where the ps command comes in. It helps you see what’s running and how resource-hungry each process is.
+
+A quick way to spot the top resource users is:
+
+```bash
+    ps aux --sort=-%mem | head
+```
+
+This lists all active processes, sorts them by memory usage (highest first), and shows the top few lines. For CPU usage instead, just sort by ``%cpu``:
+
+```bash
+    ps aux --sort=-%cpu | head
+```
+
+You’ll see columns for the process owner, CPU and memory percentages, and the command that started it. If something’s hogging resources, note its PID, then you can end it with:
+
+```bash
+    sudo kill PID # Replace PID with the actual number shown in the list
+```
